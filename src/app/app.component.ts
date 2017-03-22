@@ -6,7 +6,8 @@ import {
   OnInit,
   ViewEncapsulation
 } from '@angular/core';
-import { AppState } from './app.service';
+import { UiStateStore } from './state/ui-state.store';
+import { UiState } from './state/ui-state';
 
 /*
  * App Component
@@ -19,43 +20,37 @@ import { AppState } from './app.service';
     './app.component.css'
   ],
   template: `
-    <nav>
-      <a [routerLink]=" ['./'] "
-        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-        Index
-      </a>
-      <a [routerLink]=" ['./home'] "
-        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-        Home
-      </a>
-      <a [routerLink]=" ['./detail'] "
-        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-        Detail
-      </a>
-      <a [routerLink]=" ['./barrel'] "
-        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-        Barrel
-      </a>
-      <a [routerLink]=" ['./about'] "
-        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-        About
-      </a>
+  <div class="container-fluid">   
+    <nav class="navbar navbar-toggleable-sm navbar-light bg-faded">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="#" [routerLink]=" ['./'] " >Navbar</a>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="navbar-nav">          
+          <a class="nav-item nav-link" [routerLink]=" ['./project'] "
+            routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+            Project
+          </a>
+          <a class="nav-item nav-link" [routerLink]=" ['./client'] "
+            routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+            Client
+          </a>
+          <a class="nav-item nav-link" [routerLink]=" ['./about'] "
+            routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+            About
+          </a>
+        </div>
+      </div>
     </nav>
 
     <main>
       <router-outlet></router-outlet>
     </main>
-
-    <pre class="app-state">this.appState.state = {{ appState.state | json }}</pre>
-
     <footer>
-      <span>WebPack Angular 2 Starter by <a [href]="url">@AngularClass</a></span>
-      <div>
-        <a [href]="url">
-          <img [src]="angularclassLogo" width="25%">
-        </a>
-      </div>
+        <p>{{uiStateMessage | async}}</p>
     </footer>
+    </div>
   `
 })
 export class AppComponent implements OnInit {
@@ -64,11 +59,15 @@ export class AppComponent implements OnInit {
   public url = 'https://twitter.com/AngularClass';
 
   constructor(
-    public appState: AppState
-  ) {}
+    private uiStateStore: UiStateStore
+  ) { }
 
   public ngOnInit() {
-    console.log('Initial App State', this.appState.state);
+
+  }
+
+  get uiStateMessage() {
+    return this.uiStateStore.uiState.map((uiState: UiState) => uiState.message);
   }
 
 }

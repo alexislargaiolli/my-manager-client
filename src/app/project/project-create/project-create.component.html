@@ -1,0 +1,10 @@
+<div class="card">
+    <img class="card-img-top" src="http://placehold.it/250x150" alt="Card image cap">
+    <div class="card-block">
+        <h4 class="card-title">Nouveau projet</h4>
+        <p class="card-text">Créer un nouveau projet</p>
+        <form [formGroup]="createForm" (ngSubmit)="submitForm($event)" autocomplete="off">
+            <input class="form-control" formControlName="name" type="text" placeholder="Nom...">
+        </form>
+    </div>
+</div>

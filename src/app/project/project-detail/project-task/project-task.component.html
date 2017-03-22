@@ -1,0 +1,15 @@
+<ul class="list-group">
+    <li class="list-group-item justify-content-between">
+        <form #taskForm="ngForm" (ngSubmit)="createTask(taskForm)">
+            <div class="input-group">
+                <input type="text" name="title" id="title" ngModel class="form-control" placeholder="Nouvelle tâche...">
+                <span class="input-group-btn">
+                <button class="btn btn-secondary" type="submit">Ajouter</button>
+            </span>
+            </div>
+        </form>
+    </li>
+    <li *ngFor="let task of tasks" class="list-group-item justify-content-between">
+        {{task.title}}<button (click)="deleteTask(task)" type="button" class="btn btn-danger">delete</button>
+    </li>
+</ul>
